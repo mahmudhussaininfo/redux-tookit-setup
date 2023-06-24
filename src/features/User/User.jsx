@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./User.scss";
-import { delateUser, fetchAllUsers } from "./UserApi";
-import { useEffect } from "react";
+import { createUser, delateUser, fetchAllUsers } from "./UserApi";
+import { useEffect, useState } from "react";
 import { getUserData } from "./UserSlice";
 
 const User = () => {
@@ -10,6 +10,25 @@ const User = () => {
   //useSelector
   const { users } = useSelector(getUserData);
 
+  const [input, setInput] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "",
+  });
+
+  const handleInputChange = (e) => {
+    setInput((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(createUser(input));
+  };
+
   useEffect(() => {
     dispatch(fetchAllUsers());
   }, [dispatch]);
@@ -17,8 +36,10 @@ const User = () => {
   return (
     <>
       <div className="container">
+        <h1 className="text-center">Data input from Api with redux toolkit</h1>
+        <br /> <br />
         <div className="row">
-          <div className="col-md-8">
+          <div className="col-md-7">
             <h1>User</h1>
             <hr />
             <table className="table">
@@ -52,6 +73,50 @@ const User = () => {
                   : "Not Founddddddddd"}
               </tbody>
             </table>
+          </div>
+          <div className="col-md-5">
+            <h1>Input Data</h1>
+            <form action="" onSubmit={handleSubmit}>
+              <input
+                className="form-control"
+                type="text"
+                placeholder="Name"
+                name="name"
+                value={input.name}
+                onChange={handleInputChange}
+              />
+              <br />
+              <input
+                className="form-control"
+                type="text"
+                placeholder="Email"
+                name="email"
+                value={input.email}
+                onChange={handleInputChange}
+              />{" "}
+              <br />
+              <input
+                className="form-control"
+                type="text"
+                placeholder="Password"
+                name="password"
+                value={input.password}
+                onChange={handleInputChange}
+              />
+              <br />
+              <input
+                className="form-control"
+                type="text"
+                placeholder="Role"
+                name="role"
+                value={input.role}
+                onChange={handleInputChange}
+              />
+              <br />
+              <button type="submit" className="form-control">
+                Submit
+              </button>
+            </form>
           </div>
         </div>
       </div>

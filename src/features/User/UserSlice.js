@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { delateUser, fetchAllUsers } from "./UserApi";
+import { createUser, delateUser, fetchAllUsers } from "./UserApi";
 
 export const userSlice = createSlice({
   name: "user",
@@ -26,6 +26,9 @@ export const userSlice = createSlice({
       })
       .addCase(delateUser.fulfilled, (state, { type, payload }) => {
         state.users = state.users.filter((data) => data._id !== payload);
+      })
+      .addCase(createUser.fulfilled, (state, { type, payload }) => {
+        state.users.push(payload.user);
       });
   },
 });

@@ -15,3 +15,9 @@ export const delateUser = createAsyncThunk("user/delateUser", async (id) => {
   await axios.delete(`http://localhost:5050/api/v1/mamu/${id}`);
   return id;
 });
+
+//create user
+export const createUser = createAsyncThunk("user/createUser", async (data) => {
+  const response = await axios.post(`http://localhost:5050/api/v1/mamu/`, data);
+  return response.data;
+});
